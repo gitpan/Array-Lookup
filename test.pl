@@ -18,7 +18,7 @@
 #    along with this program; if not, write to the Free Software
 #    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 #
-# $Id: test.pl,v 1.4 1996/12/05 19:53:19 aks Exp $
+# $Id: test.pl,v 1.2 1998/01/18 09:02:09 aks Exp $
 
 use Array::Lookup;
 
@@ -59,9 +59,9 @@ if (! -f $testref) {			# any existing reference?
 system("diff $testref $testout >$testdiff");
 
 if ($?>>8) {
-    print "There are differences; see \"$testdiff\".\n";
+    print "Uh-oh! There are differences; see \"$testdiff\".\n";
 } else {
-    print "No differences.\n";
+    print "Yea! No differences.\n";
     unlink $testdiff;
 }
 

@@ -1,6 +1,6 @@
 # Array::Lookup.pm
 #
-# $Id: Lookup.pm,v 1.4 1996/12/05 19:53:18 aks Exp $
+# $Id: Lookup.pm,v 1.2 1998/01/18 09:17:01 aks Exp $
 
 package Array::Lookup;
 
@@ -169,7 +169,7 @@ L<Array::PrintCols>
 
 =head1 AUTHOR
 
-Alan K. Stebbens <aks@hub.ucsb.edu>
+Alan K. Stebbens <aks@sgi.com>
 
 =cut
 

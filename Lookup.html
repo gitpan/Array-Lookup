@@ -1,0 +1,125 @@
+<HTML>
+<HEAD>
+<TITLE>Array::Lookup(3)</TITLE>
+</HEAD>
+<BODY>
+<H1>Array::Lookup(3)</H1>
+<HR>
+<PRE>
+       <STRONG>Array::Lookup</STRONG> - Lookup strings in arrays or hash tables
+       with abbreviation.
+
+
+</PRE>
+<H2>SYNOPSIS</H2><PRE>
+           <STRONG>use</STRONG> <STRONG>Array::Lookup;</STRONG>
+
+           <STRONG>$value</STRONG> <STRONG>=</STRONG> <STRONG>lookup</STRONG> <STRONG>$key,</STRONG> <STRONG>\@keywords,</STRONG> <STRONG>\&amp;notfound,</STRONG> <STRONG>\&amp;toomany;</STRONG>
+
+           <STRONG>$value</STRONG> <STRONG>=</STRONG> <STRONG>lookup</STRONG> <STRONG>$key,</STRONG> <STRONG>\%keywords,</STRONG> <STRONG>\&amp;notfound,</STRONG> <STRONG>\&amp;toomany;</STRONG>
+
+           <STRONG>lookup_error</STRONG> <STRONG>$key,</STRONG> <STRONG>$keywords,</STRONG> <STRONG>$err,</STRONG> <STRONG>$msg;</STRONG>
+
+
+
+</PRE>
+<H2>DESCRIPTION</H2><PRE>
+       <STRONG>lookup</STRONG>
+
+       Lookup <EM>$key</EM> in the table <EM>@keywords</EM> and return the
+       unambiguously matching keyword, if any.  If the second
+       argument is given as a hash array, <EM>%keywords</EM>, then lookup
+       a matching key, with abbreviation, and return the value
+       corresponding to the unambiguously matching key.
+
+       If there are no matches, invoke <EM>&amp;notfound</EM> like this:
+
+           <STRONG>&amp;$notfound(</STRONG> <STRONG>$key,</STRONG> <STRONG>\@keywords,</STRONG> <STRONG>'');</STRONG>
+
+       If there are two or more matches, invoke <EM>&amp;toomany</EM> like
+       this:
+
+           <STRONG>&amp;$toomany(</STRONG> <STRONG>$key,</STRONG> <STRONG>\@keywords,</STRONG> <STRONG>\@matches);</STRONG>
+
+       If either subroutine is omitted or null, then no special
+       action is taken except that <STRONG>undef</STRONG> is returned for the
+       failed lookup.
+
+       Note that the third argument, the array of ambiguous
+       matches, allows a common subroutine to be used for both
+       error conditions and still distinguish the error.
+
+       See the section on <EM>lookup</EM><STRONG>_</STRONG><EM>error</EM> for a standard method of
+       handling lookup failures.
+
+       <STRONG>lookup_error</STRONG>
+
+       Handle an error for the <EM>lookup</EM> subroutine.  The arguments:
+
+       $key      The search key which failed the lookup.
+
+       $keywords The hash or array reference containing the
+                 keywords none of which matched the <STRONG>$key</STRONG>.
+
+       $err      A flag indicating if the lookup failed because
+
+       $msg      A format string used to format and print the
+                 error message.  It should contain two <EM>printf</EM>
+                 substitution sequences: <STRONG>%s</STRONG>.  The first will be
+                 substituted with the failed lookup key; the
+                 second with one of the phrases: <STRONG>"not</STRONG> <STRONG>found"</STRONG> or
+                 <STRONG>"is</STRONG> <STRONG>ambiguous"</STRONG>, depending upon <EM>$err</EM>.
+
+                 If <EM>$msg</EM> is omitted or null, a default message
+                 will be used:
+
+                   <STRONG>"lookup</STRONG> <STRONG>failed:</STRONG> <STRONG>%s</STRONG> <STRONG>%s;</STRONG> <STRONG>use</STRONG> <STRONG>one</STRONG> <STRONG>of:\n"</STRONG>
+
+                 followed by a listing of the strings in the
+                 <EM>$keywords</EM> array.
+
+
+</PRE>
+<H2>EXAMPLES</H2><PRE>
+       <STRONG>Using</STRONG> <STRONG>arrays</STRONG>
+
+
+           <STRONG>use</STRONG> <STRONG>Array::Lookup;</STRONG>
+           <STRONG>...</STRONG>
+           <STRONG>@keywords</STRONG> <STRONG>=</STRONG> <STRONG>qw(quit</STRONG> <STRONG>find</STRONG> <STRONG>get</STRONG> <STRONG>set</STRONG> <STRONG>show);</STRONG>
+           <STRONG>...</STRONG>
+           <STRONG>$command</STRONG> <STRONG>=</STRONG> <STRONG>&lt;STDIN&gt;;</STRONG>
+           <STRONG>$command</STRONG> <STRONG>=</STRONG> <STRONG>lookup</STRONG> <STRONG>$command,</STRONG> <STRONG>\@keywords,</STRONG>
+               <STRONG>sub</STRONG> <STRONG>{</STRONG> <STRONG>lookup_error</STRONG> <STRONG>@_,</STRONG> <STRONG>"Unknown</STRONG> <STRONG>command</STRONG> <STRONG>'%s';</STRONG> <STRONG>use</STRONG> <STRONG>one</STRONG> <STRONG>of:\n";</STRONG> <STRONG>},</STRONG>
+               <STRONG>sub</STRONG> <STRONG>{</STRONG> <STRONG>lookup_error</STRONG> <STRONG>@_,</STRONG> <STRONG>"Command</STRONG> <STRONG>'%s'</STRONG> <STRONG>%s;</STRONG> <STRONG>use</STRONG> <STRONG>one</STRONG> <STRONG>of:\n";</STRONG> <STRONG>};</STRONG>
+
+
+       <STRONG>Using</STRONG> <STRONG>hashes</STRONG>
+
+
+           <STRONG>use</STRONG> <STRONG>Array::Lookup;</STRONG>
+           <STRONG>...</STRONG>
+           <STRONG>%Commands</STRONG> <STRONG>=</STRONG> <STRONG>(</STRONG> <STRONG>'quit'</STRONG> <STRONG>=&gt;</STRONG> <STRONG>\&amp;quit,</STRONG>  <STRONG>'get'</STRONG> <STRONG>=&gt;</STRONG> <STRONG>\&amp;get,</STRONG>  <STRONG>'set'</STRONG> <STRONG>=&gt;</STRONG> <STRONG>\&amp;set,</STRONG>
+                         <STRONG>'find'</STRONG> <STRONG>=&gt;</STRONG> <STRONG>\&amp;find,</STRONG>  <STRONG>'show'</STRONG> <STRONG>=&gt;</STRONG> <STRONG>\&amp;show</STRONG> <STRONG>);</STRONG>
+           <STRONG>...</STRONG>
+           <STRONG>$input</STRONG> <STRONG>=</STRONG> <STRONG>&lt;STDIN&gt;;</STRONG>
+           <STRONG>$command_sub</STRONG> <STRONG>=</STRONG> <STRONG>lookup</STRONG> <STRONG>$input,</STRONG> <STRONG>\%Commands,</STRONG>
+               <STRONG>sub</STRONG> <STRONG>{</STRONG> <STRONG>lookup_error</STRONG> <STRONG>@_,</STRONG> <STRONG>"Unknown</STRONG> <STRONG>command</STRONG> <STRONG>'%s';</STRONG> <STRONG>use</STRONG> <STRONG>one</STRONG> <STRONG>of:\n";</STRONG> <STRONG>},</STRONG>
+               <STRONG>sub</STRONG> <STRONG>{</STRONG> <STRONG>lookup_error</STRONG> <STRONG>@_,</STRONG> <STRONG>"Command</STRONG> <STRONG>'%s'</STRONG> <STRONG>%s;</STRONG> <STRONG>use</STRONG> <STRONG>one</STRONG> <STRONG>of:\n";</STRONG> <STRONG>};</STRONG>
+
+
+
+</PRE>
+<H2>SEE ALSO</H2><PRE>
+       the <EM>Array::PrintCols</EM> manpage
+
+
+</PRE>
+<H2>AUTHOR</H2><PRE>
+       Alan K. Stebbens &lt;aks@sgi.com&gt;
+
+
+
+</PRE>
+</BODY>
+</HTML>

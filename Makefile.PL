@@ -22,7 +22,7 @@ use ExtUtils::MakeMaker;
 
 WriteMakefile(
 	'NAME'		=> 'Array::Lookup',
-	'VERSION'	=> '2.0',
+	'VERSION'	=> '2.1',
 	'clean'		=> { FILES => 'test.out' },
 	'dist'  => { COMPRESS => 'gzip', SUFFIX => '.gz' },
     );
