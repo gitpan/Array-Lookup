@@ -1,0 +1,28 @@
+Array::Lookup is a Perl 5 module which performs a search through an
+array of strings, allowing for abbreviation of the search key. 
+
+The Lookup subroutine is especially handy for doing keyword lookups in
+an array or hash table, where the keyword may be abbreviated.  Exact
+matches are give priority over abbreviated matches. 
+
+The module has embedded POD text with which man or HTML pages can be
+created.
+
+For detailed usage information, you can do:
+
+    pod2man Sys::Lookup.pm | nroff -man 
+
+The module is accompanied with a Perl Makefile.PL, this README, a 
+test program (test.pl), a reference test output file, and the GNU 
+License, under which this software is freely available.
+
+The archives are available at the usual CPAN sites.  The California 
+CPAN site is:
+
+    California       ftp://ftp.cdrom.com/pub/perl/CPAN/
+
+Contributions or improvements are welcome.
+_____________________________________________________________
+Alan Stebbens          <aks@sgi.com>           (415) 933-6437
+Web Products Division,     Silicon Graphics, Inc.       (SGI)
+M/S:21L-987, 2011 N. Shoreline Blvd., Mountain View, CA 94043
