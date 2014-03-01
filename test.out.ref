@@ -326,8 +326,8 @@ Search for 's' on %commands, notfound = 'errsub'
 Result = '<undef>'
 Search for 's' on %commands, notfound = 'errsub', ambig = 'errsub'
 Key 's' is ambiguous
-Choose from: server, set, save
-Choices were: get, quit, wait, server, help, put, exit, write, list, set, use, save
+Choose from: save, server, set
+Choices were: exit, get, help, list, put, quit, save, server, set, use, wait, write
 Result = '<undef>'
 Search for 'sa' on @commands
 Result = 'save'
@@ -380,8 +380,8 @@ Search for 's' on %commands, notfound = 'errsub'
 Result = '<undef>'
 Search for 's' on %commands, notfound = 'errsub', ambig = 'errsub'
 Key 's' is ambiguous
-Choose from: server, set, save
-Choices were: get, quit, wait, server, help, put, exit, write, list, set, use, save
+Choose from: save, server, set
+Choices were: exit, get, help, list, put, quit, save, server, set, use, wait, write
 Result = '<undef>'
 Search for 'se' on @commands
 Result = '<undef>'
@@ -399,7 +399,7 @@ Result = '<undef>'
 Search for 'se' on %commands, notfound = 'errsub', ambig = 'errsub'
 Key 'se' is ambiguous
 Choose from: server, set
-Choices were: get, quit, wait, server, help, put, exit, write, list, set, use, save
+Choices were: exit, get, help, list, put, quit, save, server, set, use, wait, write
 Result = '<undef>'
 Search for 'ser' on @commands
 Result = 'server'
@@ -464,8 +464,8 @@ Search for 's' on %commands, notfound = 'errsub'
 Result = '<undef>'
 Search for 's' on %commands, notfound = 'errsub', ambig = 'errsub'
 Key 's' is ambiguous
-Choose from: server, set, save
-Choices were: get, quit, wait, server, help, put, exit, write, list, set, use, save
+Choose from: save, server, set
+Choices were: exit, get, help, list, put, quit, save, server, set, use, wait, write
 Result = '<undef>'
 Search for 'se' on @commands
 Result = '<undef>'
@@ -483,7 +483,7 @@ Result = '<undef>'
 Search for 'se' on %commands, notfound = 'errsub', ambig = 'errsub'
 Key 'se' is ambiguous
 Choose from: server, set
-Choices were: get, quit, wait, server, help, put, exit, write, list, set, use, save
+Choices were: exit, get, help, list, put, quit, save, server, set, use, wait, write
 Result = '<undef>'
 Search for 'set' on @commands
 Result = 'set'
@@ -549,7 +549,7 @@ Result = '<undef>'
 Search for 'w' on %commands, notfound = 'errsub', ambig = 'errsub'
 Key 'w' is ambiguous
 Choose from: wait, write
-Choices were: get, quit, wait, server, help, put, exit, write, list, set, use, save
+Choices were: exit, get, help, list, put, quit, save, server, set, use, wait, write
 Result = '<undef>'
 Search for 'wa' on @commands
 Result = 'wait'
@@ -603,7 +603,7 @@ Result = '<undef>'
 Search for 'w' on %commands, notfound = 'errsub', ambig = 'errsub'
 Key 'w' is ambiguous
 Choose from: wait, write
-Choices were: get, quit, wait, server, help, put, exit, write, list, set, use, save
+Choices were: exit, get, help, list, put, quit, save, server, set, use, wait, write
 Result = '<undef>'
 Search for 'wr' on @commands
 Result = 'write'

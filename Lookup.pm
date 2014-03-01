@@ -1,8 +1,8 @@
 # Array::Lookup.pm
-#
-# $Id: Lookup.pm,v 1.2 1998/01/18 09:17:01 aks Exp $
 
 package Array::Lookup;
+
+$VERSION = '2.3';
 
 @ISA    = qw(Exporter);
 @EXPORT = qw(lookup lookup_error);
@@ -15,16 +15,16 @@ use Array::PrintCols;
 
 sub lookup {
     my $key    = shift;
-    length($key) or croak "Missing lookup key argument.\n";
+    length($key)       or croak "Missing lookup key argument.\n";
     my $keytab = shift or croak "Missing keyword table argument\n";
     my $nfsub  = shift;
     my $tmsub  = shift;
 
     my @keys;
     if (ref($keytab) eq 'HASH') {
-	@keys = keys %$keytab;
+	@keys = sort(keys %$keytab);      # get sorted list of keys
     } elsif (ref($keytab) eq 'ARRAY') {
-	@keys = @$keytab;
+	@keys = sort(@$keytab);           # get the sorted list of array items
     } else {
 	croak "lookup: Second argument must be a HASH or ARRAY ref!\n";
     }
@@ -49,10 +49,10 @@ sub lookup {
 # Standard error handler for "lookup"
 
 sub lookup_error {
-    my $key = shift;
+    my $key    = shift;
     my $keytab = shift;
-    my $err = shift;
-    my $msg = shift || "lookup failed: '%s' %s; use one of:\n";
+    my $err    = shift;
+    my $msg    = shift || "lookup failed: '%s' %s; use one of:\n";
     printf STDERR ($msg, $key, ($err ? 'is ambiguous' : 'not found'));
     print_cols $keytab,'','',1;
     undef;
@@ -169,7 +169,7 @@ L<Array::PrintCols>
 
 =head1 AUTHOR
 
-Alan K. Stebbens <aks@sgi.com>
+Alan K. Stebbens <aks@stebbens.org>
 
 =cut
 

@@ -2,7 +2,7 @@
 #
 # test program for Array::Lookup.pm
 #
-#    Copyright (C) 1996  Alan K. Stebbens <aks@sgi.com>
+#    Copyright (C) 1996-2014  Alan K. Stebbens <aks@stebbens.org>
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -18,7 +18,6 @@
 #    along with this program; if not, write to the Free Software
 #    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 #
-# $Id: test.pl,v 1.2 1998/01/18 09:02:09 aks Exp $
 
 use Array::Lookup;
 
@@ -56,16 +55,18 @@ if (! -f $testref) {			# any existing reference?
     system("cp $testout $testref");	# no, copy
 }
 
-system("diff $testref $testout >$testdiff");
+system("diff -u $testref $testout >$testdiff");
 
+$exit = 0;
 if ($?>>8) {
     print "Uh-oh! There are differences; see \"$testdiff\".\n";
+    $exit = 1;
 } else {
     print "Yea! No differences.\n";
     unlink $testdiff;
 }
 
-exit;
+exit $exit;
 
 #    test $arg1, $arg2, $arg3 ..
 #
@@ -111,15 +112,15 @@ sub errsub {
 sub showarray {
     my $ar = shift;
     if (ref($ar) eq 'ARRAY') {
-	printf join(', ', @$ar);
+	printf join(', ', sort(@$ar));
     } elsif (ref($ar) eq 'HASH') {
-	printf join(', ', keys %$ar);
+	printf join(', ', sort(keys %$ar));
     } else {
 	printf "%s", $ar;
     }
     printf "\n";
 }
-    
+
 sub the_test {
 
     # Make an array of commands
@@ -171,6 +172,7 @@ sub the_test {
 
     # Build a big array of words
     @words = split(' ',`cat GNU-LICENSE`);
+    @words = grep !/http:/, @words;   # remove possibly long http URL "words"
     foreach ( @words) { s/\W+$//; s/^\W+//; }
     @words{@words} = @words;
     @words = sort keys %words;

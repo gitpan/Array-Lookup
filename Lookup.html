@@ -1,125 +1,143 @@
-<HTML>
-<HEAD>
-<TITLE>Array::Lookup(3)</TITLE>
-</HEAD>
-<BODY>
-<H1>Array::Lookup(3)</H1>
-<HR>
-<PRE>
-       <STRONG>Array::Lookup</STRONG> - Lookup strings in arrays or hash tables
-       with abbreviation.
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title></title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:aks@somewhere.local" />
+</head>
 
-
-</PRE>
-<H2>SYNOPSIS</H2><PRE>
-           <STRONG>use</STRONG> <STRONG>Array::Lookup;</STRONG>
-
-           <STRONG>$value</STRONG> <STRONG>=</STRONG> <STRONG>lookup</STRONG> <STRONG>$key,</STRONG> <STRONG>\@keywords,</STRONG> <STRONG>\&amp;notfound,</STRONG> <STRONG>\&amp;toomany;</STRONG>
-
-           <STRONG>$value</STRONG> <STRONG>=</STRONG> <STRONG>lookup</STRONG> <STRONG>$key,</STRONG> <STRONG>\%keywords,</STRONG> <STRONG>\&amp;notfound,</STRONG> <STRONG>\&amp;toomany;</STRONG>
-
-           <STRONG>lookup_error</STRONG> <STRONG>$key,</STRONG> <STRONG>$keywords,</STRONG> <STRONG>$err,</STRONG> <STRONG>$msg;</STRONG>
+<body style="background-color: white">
 
 
 
-</PRE>
-<H2>DESCRIPTION</H2><PRE>
-       <STRONG>lookup</STRONG>
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a>
+    <ul>
+      <li><a href="#lookup">lookup</a></li>
+      <li><a href="#lookup_error">lookup_error</a></li>
+    </ul>
+  </li>
+  <li><a href="#EXAMPLES">EXAMPLES</a>
+    <ul>
+      <li><a href="#Using-arrays">Using arrays</a></li>
+      <li><a href="#Using-hashes">Using hashes</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+  <li><a href="#AUTHOR">AUTHOR</a></li>
+</ul>
 
-       Lookup <EM>$key</EM> in the table <EM>@keywords</EM> and return the
-       unambiguously matching keyword, if any.  If the second
-       argument is given as a hash array, <EM>%keywords</EM>, then lookup
-       a matching key, with abbreviation, and return the value
-       corresponding to the unambiguously matching key.
+<h1 id="NAME">NAME</h1>
 
-       If there are no matches, invoke <EM>&amp;notfound</EM> like this:
+<p><b>Array::Lookup</b> - Lookup strings in arrays or hash tables with abbreviation.</p>
 
-           <STRONG>&amp;$notfound(</STRONG> <STRONG>$key,</STRONG> <STRONG>\@keywords,</STRONG> <STRONG>'');</STRONG>
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
 
-       If there are two or more matches, invoke <EM>&amp;toomany</EM> like
-       this:
+<pre><code>    use Array::Lookup;
 
-           <STRONG>&amp;$toomany(</STRONG> <STRONG>$key,</STRONG> <STRONG>\@keywords,</STRONG> <STRONG>\@matches);</STRONG>
+    $value = lookup $key, \@keywords, \&amp;notfound, \&amp;toomany;
 
-       If either subroutine is omitted or null, then no special
-       action is taken except that <STRONG>undef</STRONG> is returned for the
-       failed lookup.
+    $value = lookup $key, \%keywords, \&amp;notfound, \&amp;toomany;
 
-       Note that the third argument, the array of ambiguous
-       matches, allows a common subroutine to be used for both
-       error conditions and still distinguish the error.
+    lookup_error $key, $keywords, $err, $msg;</code></pre>
 
-       See the section on <EM>lookup</EM><STRONG>_</STRONG><EM>error</EM> for a standard method of
-       handling lookup failures.
+<h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-       <STRONG>lookup_error</STRONG>
+<h2 id="lookup"><b>lookup</b></h2>
 
-       Handle an error for the <EM>lookup</EM> subroutine.  The arguments:
+<p>Lookup <code><i>$key</i></code> in the table <code><i>@keywords</i></code> and return the unambiguously matching keyword, if any. If the second argument is given as a hash array, <code><i>%keywords</i></code>, then lookup a matching key, with abbreviation, and return the value corresponding to the unambiguously matching key.</p>
 
-       $key      The search key which failed the lookup.
+<p>If there are no matches, invoke <code><i>&amp;notfound</i></code> like this:</p>
 
-       $keywords The hash or array reference containing the
-                 keywords none of which matched the <STRONG>$key</STRONG>.
+<pre><code>    &amp;$notfound( $key, \@keywords, &#39;&#39;);</code></pre>
 
-       $err      A flag indicating if the lookup failed because
+<p>If there are two or more matches, invoke <code><i>&amp;toomany</i></code> like this:</p>
 
-       $msg      A format string used to format and print the
-                 error message.  It should contain two <EM>printf</EM>
-                 substitution sequences: <STRONG>%s</STRONG>.  The first will be
-                 substituted with the failed lookup key; the
-                 second with one of the phrases: <STRONG>"not</STRONG> <STRONG>found"</STRONG> or
-                 <STRONG>"is</STRONG> <STRONG>ambiguous"</STRONG>, depending upon <EM>$err</EM>.
+<pre><code>    &amp;$toomany( $key, \@keywords, \@matches);</code></pre>
 
-                 If <EM>$msg</EM> is omitted or null, a default message
-                 will be used:
+<p>If either subroutine is omitted or null, then no special action is taken except that <code>undef</code> is returned for the failed lookup.</p>
 
-                   <STRONG>"lookup</STRONG> <STRONG>failed:</STRONG> <STRONG>%s</STRONG> <STRONG>%s;</STRONG> <STRONG>use</STRONG> <STRONG>one</STRONG> <STRONG>of:\n"</STRONG>
+<p>Note that the third argument, the array of ambiguous matches, allows a common subroutine to be used for both error conditions and still distinguish the error.</p>
 
-                 followed by a listing of the strings in the
-                 <EM>$keywords</EM> array.
+<p>See <a href="#lookup_error">&quot;lookup_error&quot;</a> for a standard method of handling lookup failures.</p>
+
+<h2 id="lookup_error"><b>lookup_error</b></h2>
+
+<p>Handle an error for the <code><i>lookup</i></code> subroutine. The arguments:</p>
+
+<dl>
+
+<dt id="key">$key</dt>
+<dd>
+
+<p>The search key which failed the lookup.</p>
+
+</dd>
+<dt id="keywords">$keywords</dt>
+<dd>
+
+<p>The hash or array reference containing the keywords none of which matched the <code>$key</code>.</p>
+
+</dd>
+<dt id="err">$err</dt>
+<dd>
+
+<p>A flag indicating if the lookup failed because of no matches at all (&#39;&#39;), or if the lookup failed because of too many matches (<code>\@matches</code>);</p>
+
+</dd>
+<dt id="msg">$msg</dt>
+<dd>
+
+<p>A format string used to format and print the error message. It should contain two <i>printf</i> substitution sequences: <code>%s</code>. The first will be substituted with the failed lookup key; the second with one of the phrases: <code>&quot;not found&quot;</code> or <code>&quot;is ambiguous&quot;</code>, depending upon <code><i>$err</i></code>.</p>
+
+<p>If <code><i>$msg</i></code> is omitted or null, a default message will be used:</p>
+
+<pre><code>  &quot;lookup failed: %s %s; use one of:\n&quot;</code></pre>
+
+<p>followed by a listing of the strings in the <code><i>$keywords</i></code> array.</p>
+
+</dd>
+</dl>
+
+<h1 id="EXAMPLES">EXAMPLES</h1>
+
+<h2 id="Using-arrays">Using arrays</h2>
+
+<pre><code>    use Array::Lookup;
+    ...
+    @keywords = qw(quit find get set show);
+    ...
+    $command = &lt;STDIN&gt;;
+    $command = lookup $command, \@keywords, 
+        sub { lookup_error @_, &quot;Unknown command &#39;%s&#39;; use one of:\n&quot;; },
+        sub { lookup_error @_, &quot;Command &#39;%s&#39; %s; use one of:\n&quot;; };</code></pre>
+
+<h2 id="Using-hashes">Using hashes</h2>
+
+<pre><code>    use Array::Lookup;
+    ...
+    %Commands = ( &#39;quit&#39; =&gt; \&amp;quit,  &#39;get&#39; =&gt; \&amp;get,  &#39;set&#39; =&gt; \&amp;set,
+                  &#39;find&#39; =&gt; \&amp;find,  &#39;show&#39; =&gt; \&amp;show );
+    ...
+    $input = &lt;STDIN&gt;;
+    $command_sub = lookup $input, \%Commands, 
+        sub { lookup_error @_, &quot;Unknown command &#39;%s&#39;; use one of:\n&quot;; },
+        sub { lookup_error @_, &quot;Command &#39;%s&#39; %s; use one of:\n&quot;; };</code></pre>
+
+<h1 id="SEE-ALSO">SEE ALSO</h1>
+
+<p><a>Array::PrintCols</a></p>
+
+<h1 id="AUTHOR">AUTHOR</h1>
+
+<p>Alan K. Stebbens &lt;aks@stebbens.org&gt;</p>
 
 
-</PRE>
-<H2>EXAMPLES</H2><PRE>
-       <STRONG>Using</STRONG> <STRONG>arrays</STRONG>
+</body>
+
+</html>
 
 
-           <STRONG>use</STRONG> <STRONG>Array::Lookup;</STRONG>
-           <STRONG>...</STRONG>
-           <STRONG>@keywords</STRONG> <STRONG>=</STRONG> <STRONG>qw(quit</STRONG> <STRONG>find</STRONG> <STRONG>get</STRONG> <STRONG>set</STRONG> <STRONG>show);</STRONG>
-           <STRONG>...</STRONG>
-           <STRONG>$command</STRONG> <STRONG>=</STRONG> <STRONG>&lt;STDIN&gt;;</STRONG>
-           <STRONG>$command</STRONG> <STRONG>=</STRONG> <STRONG>lookup</STRONG> <STRONG>$command,</STRONG> <STRONG>\@keywords,</STRONG>
-               <STRONG>sub</STRONG> <STRONG>{</STRONG> <STRONG>lookup_error</STRONG> <STRONG>@_,</STRONG> <STRONG>"Unknown</STRONG> <STRONG>command</STRONG> <STRONG>'%s';</STRONG> <STRONG>use</STRONG> <STRONG>one</STRONG> <STRONG>of:\n";</STRONG> <STRONG>},</STRONG>
-               <STRONG>sub</STRONG> <STRONG>{</STRONG> <STRONG>lookup_error</STRONG> <STRONG>@_,</STRONG> <STRONG>"Command</STRONG> <STRONG>'%s'</STRONG> <STRONG>%s;</STRONG> <STRONG>use</STRONG> <STRONG>one</STRONG> <STRONG>of:\n";</STRONG> <STRONG>};</STRONG>
-
-
-       <STRONG>Using</STRONG> <STRONG>hashes</STRONG>
-
-
-           <STRONG>use</STRONG> <STRONG>Array::Lookup;</STRONG>
-           <STRONG>...</STRONG>
-           <STRONG>%Commands</STRONG> <STRONG>=</STRONG> <STRONG>(</STRONG> <STRONG>'quit'</STRONG> <STRONG>=&gt;</STRONG> <STRONG>\&amp;quit,</STRONG>  <STRONG>'get'</STRONG> <STRONG>=&gt;</STRONG> <STRONG>\&amp;get,</STRONG>  <STRONG>'set'</STRONG> <STRONG>=&gt;</STRONG> <STRONG>\&amp;set,</STRONG>
-                         <STRONG>'find'</STRONG> <STRONG>=&gt;</STRONG> <STRONG>\&amp;find,</STRONG>  <STRONG>'show'</STRONG> <STRONG>=&gt;</STRONG> <STRONG>\&amp;show</STRONG> <STRONG>);</STRONG>
-           <STRONG>...</STRONG>
-           <STRONG>$input</STRONG> <STRONG>=</STRONG> <STRONG>&lt;STDIN&gt;;</STRONG>
-           <STRONG>$command_sub</STRONG> <STRONG>=</STRONG> <STRONG>lookup</STRONG> <STRONG>$input,</STRONG> <STRONG>\%Commands,</STRONG>
-               <STRONG>sub</STRONG> <STRONG>{</STRONG> <STRONG>lookup_error</STRONG> <STRONG>@_,</STRONG> <STRONG>"Unknown</STRONG> <STRONG>command</STRONG> <STRONG>'%s';</STRONG> <STRONG>use</STRONG> <STRONG>one</STRONG> <STRONG>of:\n";</STRONG> <STRONG>},</STRONG>
-               <STRONG>sub</STRONG> <STRONG>{</STRONG> <STRONG>lookup_error</STRONG> <STRONG>@_,</STRONG> <STRONG>"Command</STRONG> <STRONG>'%s'</STRONG> <STRONG>%s;</STRONG> <STRONG>use</STRONG> <STRONG>one</STRONG> <STRONG>of:\n";</STRONG> <STRONG>};</STRONG>
-
-
-
-</PRE>
-<H2>SEE ALSO</H2><PRE>
-       the <EM>Array::PrintCols</EM> manpage
-
-
-</PRE>
-<H2>AUTHOR</H2><PRE>
-       Alan K. Stebbens &lt;aks@sgi.com&gt;
-
-
-
-</PRE>
-</BODY>
-</HTML>

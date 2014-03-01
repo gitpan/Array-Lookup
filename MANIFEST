@@ -1,3 +1,4 @@
+Changes
 Copyright
 GNU-LICENSE
 Lookup.html
@@ -7,3 +8,5 @@ Makefile.PL
 README
 test.out.ref
 test.pl
+META.yml                                 Module YAML meta-data (added by MakeMaker)
+META.json                                Module JSON meta-data (added by MakeMaker)

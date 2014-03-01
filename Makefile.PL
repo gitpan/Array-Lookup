@@ -1,6 +1,6 @@
 # Makefile for Array::Lookup
 #
-#    Copyright (C) 1996  Alan K. Stebbens <aks@sgi.com>
+#    Copyright (C) 1996-2014  Alan K. Stebbens <aks@stebbens.org>
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@ use ExtUtils::MakeMaker;
 
 WriteMakefile(
 	'NAME'		=> 'Array::Lookup',
-	'VERSION'	=> '2.1',
+	'VERSION_FROM'  => 'Lookup.pm',
 	'clean'		=> { FILES => 'test.out' },
-	'dist'  => { COMPRESS => 'gzip', SUFFIX => '.gz' },
+	'dist'          => { COMPRESS => 'gzip', SUFFIX => '.gz' },
     );
